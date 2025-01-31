@@ -19,6 +19,10 @@ io.on("connection", (socket) => {
   socket.on("room", (data) => {
     socket.join(data);
   });
+  socket.on("message", (data) => {
+    //io.to(data.room).emit("message", data);
+    console.log(data,'adam')
+  });
 });
 
 const PORT = 8001;

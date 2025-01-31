@@ -22,7 +22,7 @@ function App() {
           socket={socket}
         />
       ) : (
-        <Chat />
+        <Chat socket={socket} username={username} room={room} />
       )}
 
       {/* <Chat /> */}
