@@ -1,15 +1,33 @@
+import { useState } from "react";
+import "./App.css";
+import Chat from "./components/Chat";
+import Room from "./components/Room";
+import io from "socket.io-client";
 
-import './App.css'
+const socket = io.connect("http://localhost:8001");
 
 function App() {
-
+  const [username, setUsername] = useState("");
+  const [room, setRoom] = useState("");
+  const [chatScreen, setChatScreen] = useState(false);
   return (
-   <div >
-    <h1 className="text-3xl font-bold underline">
-    Hello world!hhhhhhhhhhhhhhhhh
-  </h1>
-   </div>
-  )
+    <div className="App">
+      {!chatScreen ? (
+        <Room
+          username={username}
+          room={room}
+          setUsername={setUsername}
+          setRoom={setRoom}
+          setChatScreen={setChatScreen}
+          socket={socket}
+        />
+      ) : (
+        <Chat />
+      )}
+
+      {/* <Chat /> */}
+    </div>
+  );
 }
 
-export default App
+export default App;

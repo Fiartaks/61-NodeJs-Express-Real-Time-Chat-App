@@ -10,12 +10,18 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "https://localhost:3000",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST"],
   },
 });
+io.on("connection", (socket) => {
+  console.log("Socket connected: ", socket.id);
+  socket.on("room", (data) => {
+    socket.join(data);
+  });
+});
 
-const PORT = 5000;
+const PORT = 8001;
 server.listen(PORT, () => {
-  console.log("server is running on port :5000");
+  console.log("server is running on port :8001");
 });
