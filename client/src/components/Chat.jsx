@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Chat = ({ socket, username, room }) => {
   const [message, setMessage] = useState("");
+  const [messageList, setMessageList] = useState([]);
+
+  useEffect(() => {
+    socket.on("messageReturn", (data) => {
+      setMessageList((prev) => [...prev, data]);
+    });
+  }, [socket]);
 
   const sendMessage = async () => {
     const messageContent = {
@@ -9,11 +16,14 @@ const Chat = ({ socket, username, room }) => {
       message: message,
       room: room,
       date:
-        new Date(Date.now).getHours() + ":" + new Date(Date.now).getMinutes(),
+        new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
     };
     await socket.emit("message", messageContent);
+    setMessageList((prev) => [...prev, messageContent]);
     setMessage("");
   };
+
+
   return (
     <div className="flex items-center justify-center h-full">
       <div className="w-1/3 h-[600px] bg-white relative ">
@@ -21,21 +31,26 @@ const Chat = ({ socket, username, room }) => {
           <div className="w-12 h-12 bg-white rounded-full"></div>
         </div>
         <div className="w-full h-[400px] overflow-y-auto ">
-          <div className="w-2/3 h-12 p-2 bg-blue-600 text-white text-sm m-2 rounded-xl rounded-br-none">
-            <div>Deneme </div>
-            <div className="w-full flex justify-end text-sm">
-              Alparslan Kaya - 31.01.2025
-            </div>
-          </div>
-
-          <div className="flex justify-end">
-            <div className="w-2/3 h-12 p-2 bg-green-600 text-white text-sm m-2 rounded-xl rounded-br-none">
-              <div>Deneme </div>
-              <div className="w-full flex justify-end text-sm">
-                Alparslan Kaya - 31.01.2025
+          {messageList &&
+            messageList.map((msg, i) => (
+              <div
+                key={i} // Add unique key
+                className={`${
+                  username === msg.username ? "flex justify-end" : ""
+                } `}
+              >
+                <div
+                  className={` ${
+                    username === msg.username ? "bg-green-600" : "bg-blue-600"
+                  } w-2/3 h-12 p-2 text-white text-sm m-2 rounded-xl rounded-br-none `}
+                >
+                  <div>{msg.message} </div>
+                  <div className="w-full flex justify-end text-sm">
+                    {msg.username}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            ))}
         </div>
         <div className="absolute bottom-0 left-0 w-full">
           <input
@@ -56,4 +71,5 @@ const Chat = ({ socket, username, room }) => {
     </div>
   );
 };
+
 export default Chat;

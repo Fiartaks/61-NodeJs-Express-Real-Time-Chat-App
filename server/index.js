@@ -14,15 +14,18 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
 io.on("connection", (socket) => {
-  console.log("Socket connected: ", socket.id);
+  console.log(socket.id);
   socket.on("room", (data) => {
     socket.join(data);
   });
+
   socket.on("message", (data) => {
     //io.to(data.room).emit("message", data);
-    console.log(data,'adam')
-  });
+    //console.log(data,'adam')
+    socket.to(data.room).emit('messageReturn',data)
+  })
 });
 
 const PORT = 8001;
