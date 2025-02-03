@@ -1,4 +1,3 @@
-
 # NodeJs-Express Real Time Chat Application Project 💬🚀
 
 ## Project Overview 🌟
@@ -64,4 +63,3 @@ This project demonstrates real-time chat functionalities using Socket.io, combin
 
 
 npm i express nodemon socket.io cors
-
