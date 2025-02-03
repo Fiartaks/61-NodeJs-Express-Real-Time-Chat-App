@@ -44,6 +44,14 @@ The aim of this application is to demonstrate how to build real-time application
    - Create components for the home screen and chat interface.
    - Allow users to enter their names and room codes to connect.
    - Implement messaging functionalities using Socket.io.
+ 
+## Technologies Used 💻
+- **Node.js**: JavaScript runtime for building server-side applications. 🌌
+- **Express**: A fast and minimalist web framework for Node.js. ⚡
+- **Socket.io**: Library for real-time web applications, enabling bi-directional communication. 🔄
+- **Cors**: Middleware for enabling Cross-Origin Resource Sharing. 🌐
+- **dotenv**: Module for managing environment variables. 🔒
+- **Vercel**: Platform for deploying serverless applications. ☁️
 
 ## Features ✨
 - Real-time messaging between users. 💬
